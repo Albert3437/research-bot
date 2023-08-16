@@ -16,4 +16,4 @@ def update_data():
 
                 df = bd.get_historical_candles(symbol=symbol, start_date=date[0], end_date=date[1], interval=interval)
                 
-                df.to_csv(f'data/{symbol}USDT/data_{date[:4]}/{interval}.csv', index=False)
+                df.to_csv(f'data/{symbol}USDT/data_{date[0][:4]}/{interval}.csv', index=False)

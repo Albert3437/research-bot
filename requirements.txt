@@ -1,0 +1,5 @@
+pandas
+TA-Lib
+loguru
+python-binance
+telebot
