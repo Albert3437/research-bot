@@ -46,6 +46,7 @@ class Telegram:
             self.bot.send_document(self.chat_id, excel_file)
         if text == 'Обновить данные для анализа':
             update_data()
+            self.send_message('Данные обновлены!')
         
 
     @logger.catch
