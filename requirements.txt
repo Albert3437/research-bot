@@ -3,3 +3,4 @@ TA-Lib
 loguru
 python-binance
 telebot
+Flask
