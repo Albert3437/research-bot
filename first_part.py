@@ -18,10 +18,8 @@ def run(token):
     telega.send_message(token)
     arch_dict = {}
     for arch in ARCH_LIST:
-        telega.send_message(arch)
         arch_type_dict = {}
         for arch_type in ARCH_TYPE:
-            telega.send_message(arch_type)
             year_type_dict = {}
             for year in YEARS:
                 telega.send_message(year)
@@ -30,10 +28,9 @@ def run(token):
                     telega.send_message(interval)
                     comb_number_dict = {}
                     for comb_number in COMB_NUMBER_LIST:
-                        telega.send_message(comb_number)
+                        telega.send_message(str((token, comb_number)))
                         comb_dict = {}
                         for comb in get_combinations(comb_number):
-                            telega.send_message(str(comb))
                             calc = Calculation(arch, arch_type, comb, token, interval, year)
                             data = calc.run()
                             comb_dict[tuple(comb)] = data
