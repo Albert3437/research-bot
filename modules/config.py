@@ -1,4 +1,4 @@
-TELE_TOKEN = '5667820959:AAHk3L83owZ7AF5-bdItInNkOxNmlDLAx08'
+TELE_TOKEN = '5667820959:AAHk3L83owZ7AF5-bdItInNkOxNmlDLAx08' # 6583322943:AAH0NHk0V25t502hdnUGbyODyblw30TFfYk
 TELE_USER_ID = '476600066'
 TOKEN_LIST = ['DOGE', 'SOL', 'DOT', 'AVAX', 'MATIC', 'ADA', 'BTC', 'LTC', 'ETH', 'TRX']
 SIGNAL_LIST = ['TR', 'ATR', 'AD', 'AA', 'TS', 'DM', 'PPO', 'PPOP', 'TSI', 'RS', 'ADO', 'MFI', 'ADX', 'Bollinger', 'CCI', 'CMF', 'Ichimoku', 'MACD', 'Momentum', 'OBV', 'SAR', 'ROC', 'RSI', 'SMA', 'Stochastic', 'WPR']
