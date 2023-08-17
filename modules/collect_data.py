@@ -6,7 +6,7 @@ import time
 def update_data():
 
     bd = BinanceData()
-    dates = [['2021-01-01','2021-12-31'], ['2022-01-01','2022-12-31'], ['2023-01-01',time.time()*1000]]
+    dates = [['2023-01-01',time.time()*1000]]
     for symbol in TOKEN_LIST:
         print(symbol)
         for date in dates:

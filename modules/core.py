@@ -5,8 +5,8 @@ import aiohttp
 from second_part import run as second_run
 
 async def send_request(port):
-    print(port)
-    url = f"http://localhost:500{port}/receive"
+    port += 5000
+    url = f"http://localhost:{port}/receive"
     async with aiohttp.ClientSession() as session:
         async with session.post(url) as response:
             return await response.text()
