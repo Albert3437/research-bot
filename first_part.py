@@ -37,6 +37,7 @@ def run(token):
                         comb_number_dict[comb_number] = comb_dict
                     interval_dict[comb_number] = comb_dict
                 year_type_dict[comb_number] = comb_dict
+                json_dump(interval_dict, f'calculated_result/{token}_{year}')
             arch_type_dict[comb_number] = comb_dict
         arch_dict[comb_number] = comb_dict
     json_dump(arch_dict, token)
