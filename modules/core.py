@@ -22,7 +22,7 @@ async def finaly_code():
 async def start():
     respons_list = []
     
-    tasks = [send_request(port) for port in range(len(TOKEN_LIST)+1)]
+    tasks = [send_request(port) for port in range(1, len(TOKEN_LIST)+1)]
     responses = await asyncio.gather(*tasks)
     
     for i, response in enumerate(responses, start=1):
