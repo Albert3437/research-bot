@@ -31,6 +31,7 @@ def run(token):
                         telega.send_message(str((token, comb_number)))
                         comb_dict = {}
                         for comb in get_combinations(comb_number):
+                            telega.send_message(str((token, comb)))
                             calc = Calculation(arch, arch_type, comb, token, interval, year)
                             data = calc.run()
                             comb_dict[tuple(comb)] = data
