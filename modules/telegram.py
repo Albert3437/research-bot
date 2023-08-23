@@ -6,6 +6,7 @@ from modules.logger import logger
 from modules.core import start
 import asyncio
 from modules.collect_data import update_data
+from second_part import run
 
 
 class Telegram:
@@ -34,7 +35,8 @@ class Telegram:
             button1 = KeyboardButton(text="ЗАПУСТИТЬ!")
             button2 = KeyboardButton(text="Скачать готовый результат")
             button3 = KeyboardButton(text="Обновить данные для анализа")
-            keyboard.add(button1, button2, button3)
+            button4 = KeyboardButton(text="Второй этап!")
+            keyboard.add(button1, button2, button3, button4)
 
             # Отправляем сообщение с клавиатурой
             self.bot.send_message(self.chat_id, "Дорова бро, нажав одну кнопочку, через пару суток ты узнаешь о самых эффективных торговых инструментах", reply_markup=keyboard)
@@ -47,6 +49,9 @@ class Telegram:
         if text == 'Обновить данные для анализа':
             update_data()
             self.send_message('Данные обновлены!')
+        if text == 'Второй этап!':
+            run()
+            self.send_message('Обработано')
         
 
     @logger.catch
