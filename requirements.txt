@@ -4,3 +4,4 @@ loguru
 python-binance
 telebot
 Flask
+numpy
