@@ -5,6 +5,7 @@ import pandas as pd
 from modules.db import StratsDataBase
 
 
+@logger.catch
 def amount_filter(strats:list):
     strat_list = []
     for i,strat in enumerate(strats):
@@ -13,6 +14,7 @@ def amount_filter(strats:list):
     return strat_list
 
 
+@logger.catch
 def year_filter(strats):
     strat_list = []
     for strat in strats:
@@ -21,6 +23,7 @@ def year_filter(strats):
     return strat_list
 
 
+@logger.catch
 def non_profit_filter(strats:list):
     strat_list = []
     for i,strat in enumerate(strats):
@@ -29,6 +32,7 @@ def non_profit_filter(strats:list):
     return strat_list
 
 
+@logger.catch
 def profitable_strats(strats):
     best_strats = []
     profit_percents = []
@@ -41,6 +45,7 @@ def profitable_strats(strats):
     return best_strats
     
 
+@logger.catch
 def core(token):
     strat_db = StratsDataBase(token)
     strats = strat_db.read_strats()
@@ -53,6 +58,7 @@ def core(token):
     return strats
 
 
+@logger.catch
 def run():
     all_data = []
     for token in TOKEN_LIST:
