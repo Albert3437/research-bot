@@ -1,7 +1,7 @@
 TELE_TOKEN = '5667820959:AAHk3L83owZ7AF5-bdItInNkOxNmlDLAx08' # 6583322943:AAH0NHk0V25t502hdnUGbyODyblw30TFfYk
 TELE_USER_ID = '476600066'
 TOKEN_LIST = ['DOGE', 'SOL', 'DOT', 'AVAX', 'MATIC', 'ADA', 'BTC', 'LTC', 'ETH', 'TRX']
-SIGNAL_LIST = ['TR', 'ATR', 'AD', 'AA', 'TS', 'DM', 'PPO', 'PPOP', 'TSI', 'RS', 'ADO', 'MFI', 'ADX', 'Bollinger', 'CCI', 'CMF', 'Ichimoku', 'MACD', 'Momentum', 'OBV', 'SAR', 'ROC', 'RSI', 'SMA', 'Stochastic', 'WPR']
+SIGNAL_LIST = ['ADX', 'Bollinger', 'CCI', 'CMF', 'Ichimoku', 'MACD', 'Momentum', 'OBV', 'SAR', 'ROC', 'RSI', 'SMA', 'Stochastic', 'WPR', 'TR', 'ATR', 'AD', 'AA', 'TS', 'DM', 'PPO', 'PPOP', 'TSI', 'RS', 'ADO', 'MFI']
 YEARS = [2022, 2023]
 INTERVALS = ['1m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '12h']
 ARCH_LIST = ['classic', "classic reverse"]

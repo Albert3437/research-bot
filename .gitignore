@@ -14,7 +14,7 @@ SOL.json
 TON.json
 AVAX.json
 MATIC.json
-
+data.db
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,18 +1,42 @@
-from time import perf_counter
 import pandas as pd
+from modules.indicators import TechnicalIndicators
+from modules.logger import logger
 from modules.config import *
+from numba import jit
 
 
 class Calculation:
-    def __init__(self, df:pd.DataFrame, arch:str, arch_type:str, indicator_list:list, bank:int=500):
-        self.df = df
+    def __init__(self, df:pd.DataFrame, arch:str, arch_type:str, indicator_list:list, token:str, interval:str, year:int, bank:int=500):
         self.arch = arch
         self.type = arch_type
         self.indicator_list = indicator_list
         self.start_sum = bank
-        self.keys = list(df.keys())
+        self.df = df
 
-    
+
+    @logger.catch
+    def calculate(self, df, signal_list):
+            # Вычисление необходимых индикаторов
+            ta = TechnicalIndicators(df)
+            
+            for signal in signal_list:
+                eval(INDICATOR_DICT[signal])
+            return df
+
+
+    @logger.catch
+    def core(self, df, indicator_list):
+        pos_side = 0
+        signals = set()
+        for sign in indicator_list:
+            signals.add(df[f'{sign} signal'])
+        if len(signals) == 1:
+            pos_side = signals.pop()
+        
+        return  pos_side
+
+
+    @logger.catch
     def calc_metric(self):
         metrics_dict = {'totalProfit':0, 'dealsNumber':0, 'profitPercent':0, 'avgPercent':0, 'minPercent':0, 'maxPercent':0}
         if len(self.percent_list):
@@ -29,6 +53,7 @@ class Calculation:
         return metrics_dict
 
 
+    @logger.catch
     def calc_bank(self, close, side):
         if (self.ans[0] == -1 and self.type == 'all signals') or (self.ans[0] == -1 and side != self.ans[0] and self.type == 'classic'):
             percent = self.price/close
@@ -46,57 +71,38 @@ class Calculation:
             self.switcher=1
 
 
-    def core(self, row):
-        pos_side = 0
-        signals = set()
-        for sign in self.indicator_list:
-            indicator_index = self.keys.index(f'{sign} signal') 
-            signals.add(row[indicator_index])
-        if len(signals) == 1:
-            pos_side = signals.pop()
-
-        return  pos_side
-    
-
+    @logger.catch
     def run(self):
         self.switcher = 0
         self.bank = self.start_sum
         self.ans = ['', '']
         self.percent_list = []
-        array = self.df.to_numpy()
-
-
         if self.arch == "classic":
-            for row in array:
-                side = self.core(row)
-                close = float(row[4])
+            #self.df = self.calculate(self.df, self.indicator_list)
 
-                self.calc_bank(close, side)
+            for _, row in self.df.iterrows():
+                close = float(row['close'])
+                side = self.core(row, self.indicator_list)
+
+                if side == 1:
+                    self.calc_bank(close, side)
+                if side == -1:
+                    self.calc_bank(close, side)
 
         elif self.arch == "classic reverse":
-            for row in array:
-                side = self.core(row) * -1
-                close = float(row[4])
+            #self.df = self.calculate(self.df, self.indicator_list)
 
-                self.calc_bank(close, side)
+            for _, row in self.df.iterrows():
+                close = float(row['close'])
+                side = self.core(row, self.indicator_list)
 
+                if side == 1:
+                    self.calc_bank(close, side)
+                if side == -1:
+                    self.calc_bank(close, side)
+        
         return self.calc_metric()
 
 
-                
-        
-
-
-
-#df = pd.read_csv('data/ADAUSDT/data_2022/1m.csv')\
-
-#from modules.indicators import TechnicalIndicators
-#ta = TechnicalIndicators(df)
-#
-#for values in INDICATOR_DICT.values():
-#    eval(values)
-#
-#start = perf_counter()
-#calc = Calculation(df, 'classic', 'all signals', ['ADX'])
+#calc = Calculation('classic', 'all signals', ['WPR'], 'ADA', '1m', 2023, 500)
 #print(calc.run())
-#print('time', (perf_counter() - start))

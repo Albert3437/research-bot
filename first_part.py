@@ -1,9 +1,13 @@
+import pandas as pd
 from modules.config import *
 from calculate import Calculation
-import json
+from modules.db import StratsDataBase
 from modules.logger import logger
 from modules.telegram import Telegram
 from modules.prepare_data import get_combinations
+from modules.indicators import TechnicalIndicators
+import json
+import sys
 
 @logger.catch
 def json_dump(data, filename):
@@ -11,36 +15,36 @@ def json_dump(data, filename):
         json.dump(data, f)
 
 
+def calc_all_indicators(df):
+    ta = TechnicalIndicators(df)
+
+    for values in INDICATOR_DICT.values():
+        eval(values)
+
+    return df
+
 
 @logger.catch
 def run(token):
     telega = Telegram()
+    strat_db = StratsDataBase(token)
+    strat_db.clear_strats()
     telega.send_message(token)
-    arch_dict = {}
     for arch in ARCH_LIST:
-        arch_type_dict = {}
         for arch_type in ARCH_TYPE:
-            year_type_dict = {}
             for year in YEARS:
                 telega.send_message(year)
-                interval_dict = {}
                 for interval in INTERVALS:
                     telega.send_message(interval)
-                    comb_number_dict = {}
+                    df = pd.read_csv(f'data/{token}USDT/data_{year}/{interval}.csv')
+                    df = calc_all_indicators(df)
                     for comb_number in COMB_NUMBER_LIST:
-                        telega.send_message(str((token, comb_number)))
-                        comb_dict = {}
                         for comb in get_combinations(comb_number):
-                            calc = Calculation(arch, arch_type, comb, token, interval, year)
+                            calc = Calculation(df, arch, arch_type, comb, year)
                             data = calc.run()
-                            comb_dict[tuple(comb)] = data
-                        comb_number_dict[comb_number] = comb_dict
-                    interval_dict[comb_number] = comb_dict
-                year_type_dict[comb_number] = comb_dict
-                json_dump(interval_dict, f'calculated_result/{token}_{year}')
-            arch_type_dict[comb_number] = comb_dict
-        arch_dict[comb_number] = comb_dict
-    json_dump(arch_dict, token)
-    return arch_dict
+                            strat_db.write_strat(arch, arch_type, year, interval, comb_number, str(comb), data['totalProfit'], data['dealsNumber'], data['profitPercent'], data['avgPercent'], data['minPercent'], data['maxPercent'])
 
 
+if __name__ == '__main__':
+    index = int(sys.argv[1])
+    run(TOKEN_LIST[index])

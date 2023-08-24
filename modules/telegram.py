@@ -8,6 +8,8 @@ import asyncio
 from modules.collect_data import update_data
 from second_part import run
 
+    
+
 
 class Telegram:
     def __init__(self):
@@ -32,7 +34,7 @@ class Telegram:
         if text == '/start':
             # Создаем клавиатуру с двумя кнопками
             keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-            button1 = KeyboardButton(text="ЗАПУСТИТЬ!")
+            button1 = KeyboardButton(text="Скачать все данные")
             button2 = KeyboardButton(text="Скачать готовый результат")
             button3 = KeyboardButton(text="Обновить данные для анализа")
             button4 = KeyboardButton(text="Второй этап!")
@@ -40,9 +42,10 @@ class Telegram:
 
             # Отправляем сообщение с клавиатурой
             self.bot.send_message(self.chat_id, "Дорова бро, нажав одну кнопочку, через пару суток ты узнаешь о самых эффективных торговых инструментах", reply_markup=keyboard)
-        if text == 'ЗАПУСТИТЬ!':
-            asyncio.run(start())
-            self.send_message('ПОЗДРАВЛЯЮ, спустя несколько суток, это говно наконец-то выполнено')
+        if text == 'Скачать все данные':
+            for token in TOKEN_LIST:
+                excel_file = open(f'{token}.xlsx', 'rb')
+                self.bot.send_document(self.chat_id, excel_file)
         if text == 'Скачать готовый результат':
             excel_file = open('analized.xlsx', 'rb')  # Замените на путь к вашему Excel файлу
             self.bot.send_document(self.chat_id, excel_file)
