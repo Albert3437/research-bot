@@ -38,7 +38,9 @@ class Telegram:
             button2 = KeyboardButton(text="Скачать готовый результат")
             button3 = KeyboardButton(text="Обновить данные для анализа")
             button4 = KeyboardButton(text="Второй этап!")
-            keyboard.add(button1, button2, button3, button4)
+            button5 = KeyboardButton(text="Скачать логгер")
+            button6 = KeyboardButton(text="Скачать базу данных")
+            keyboard.add(button1, button2, button3, button4, button3, button4)
 
             # Отправляем сообщение с клавиатурой
             self.bot.send_message(self.chat_id, "Дорова бро, нажав одну кнопочку, через пару суток ты узнаешь о самых эффективных торговых инструментах", reply_markup=keyboard)
@@ -55,6 +57,12 @@ class Telegram:
         if text == 'Второй этап!':
             run()
             self.send_message('Обработано')
+        if text == 'Скачать базу данных':
+            excel_file = open('data.db', 'rb')  # Замените на путь к вашему Excel файлу
+            self.bot.send_document(self.chat_id, excel_file)
+        if text == 'Скачать логгер':
+            excel_file = open('debug.log', 'rb')  # Замените на путь к вашему Excel файлу
+            self.bot.send_document(self.chat_id, excel_file)
         
 
     @logger.catch
