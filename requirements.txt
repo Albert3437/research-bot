@@ -5,3 +5,4 @@ python-binance
 telebot
 Flask
 numpy
+openpyxl

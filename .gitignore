@@ -4,16 +4,17 @@ test.ipynb
 debug.log
 analized.xlsx
 data/config.py
-ADA.json
-BTC.json
-LTC.json
-ETH.json
-TRX.json
-DOGE.json
-SOL.json
-TON.json
-AVAX.json
-MATIC.json
+ADA.xlsx
+BTC.xlsx
+LTC.xlsx
+ETH.xlsx
+TRX.xlsx
+DOGE.xlsx
+DOT.xlsx
+SOL.xlsx
+TON.xlsx
+AVAX.xlsx
+MATIC.xlsx
 data.db
 # Byte-compiled / optimized / DLL files
 __pycache__/

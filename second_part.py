@@ -62,7 +62,9 @@ def core(token):
 def run():
     all_data = []
     for token in TOKEN_LIST:
-        all_data.extend(core(token))
+        for strat in core(token):
+            strat['token'] = token
+            all_data.append(strat)
     data = profitable_strats(all_data)
     df = pd.DataFrame(data)
     df.to_excel('analized.xlsx')
