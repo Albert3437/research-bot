@@ -54,7 +54,7 @@ def core(token):
     strats = year_filter(strats)
     df = pd.DataFrame(strats)
     df['totalProfit'] = df['totalProfit'] * 100
-    df.to_excel(f'{token}.xlsx')
+    df.to_excel(f'ready_data/{token}.xlsx')
     return strats
 
 

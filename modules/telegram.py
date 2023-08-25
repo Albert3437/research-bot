@@ -46,7 +46,7 @@ class Telegram:
             self.bot.send_message(self.chat_id, "Дорова бро, нажав одну кнопочку, через пару суток ты узнаешь о самых эффективных торговых инструментах", reply_markup=keyboard)
         if text == 'Скачать все данные':
             for token in TOKEN_LIST:
-                excel_file = open(f'{token}.xlsx', 'rb')
+                excel_file = open(f'ready_data/{token}.xlsx', 'rb')
                 self.bot.send_document(self.chat_id, excel_file)
         if text == 'Скачать готовый результат':
             excel_file = open('analized.xlsx', 'rb')  # Замените на путь к вашему Excel файлу
