@@ -16,7 +16,7 @@ class Calculation:
     def calc_metric(self):
         metrics_dict = {'totalProfit':0, 'dealsNumber':0, 'profitPercent':0, 'avgPercent':0, 'minPercent':0, 'maxPercent':0}
         if len(self.percent_list):
-            metrics_dict['totalProfit'] = round(self.bank / self.start_sum, 5)
+            metrics_dict['totalProfit'] = round(self.bank/self.start_sum, 5)
             metrics_dict['dealsNumber'] = round(len(self.percent_list), 5)
             profit_percent = 0
             for percent in self.percent_list:
@@ -30,12 +30,12 @@ class Calculation:
 
 
     def calc_bank(self, close, side):
-        if (self.ans[0] == -1 and self.type == 'all signals') or (self.ans[0] == -1 and side != self.ans[0] and self.type == 'classic'):
+        if (self.ans[0] == -1 and self.type == 'all signals') or (self.ans[0] == -1 and side == 1 and self.type == 'classic'):
             percent = self.price/close
             self.bank *= percent - FEES
             self.percent_list.append(percent)
             self.switcher=0
-        elif (self.ans[0] == 1 and self.type == 'all signals') or (self.ans[0] == 1 and side != self.ans[0] and self.type == 'classic'):
+        elif (self.ans[0] == 1 and self.type == 'all signals') or (self.ans[0] == 1 and side == -1 and self.type == 'classic'):
             percent = close/self.price
             self.bank *= percent - FEES
             self.percent_list.append(percent)
@@ -44,6 +44,7 @@ class Calculation:
         if self.switcher == 0:
             self.price = close
             self.switcher=1
+
 
 
     def core(self, row):
@@ -70,15 +71,15 @@ class Calculation:
             for row in array:
                 side = self.core(row)
                 close = float(row[4])
-
-                self.calc_bank(close, side)
+                if side != 0:
+                    self.calc_bank(close, side)
 
         elif self.arch == "classic reverse":
             for row in array:
                 side = self.core(row) * -1
                 close = float(row[4])
-
-                self.calc_bank(close, side)
+                if side != 0:
+                    self.calc_bank(close, side)
 
         return self.calc_metric()
 

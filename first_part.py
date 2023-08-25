@@ -7,6 +7,7 @@ from modules.telegram import Telegram
 from modules.prepare_data import get_combinations
 from modules.indicators import TechnicalIndicators
 import json
+import threading
 import sys
 
 @logger.catch
@@ -48,3 +49,4 @@ def run(token):
 if __name__ == '__main__':
     index = int(sys.argv[1])
     run(TOKEN_LIST[index])
+    run(TOKEN_LIST[index+5])

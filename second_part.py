@@ -43,7 +43,7 @@ def profitable_strats(strats):
         index = profit_percents.index(profit_percent)
         best_strats.append(strats[index])
     return best_strats
-    
+
 
 @logger.catch
 def core(token):
@@ -55,8 +55,25 @@ def core(token):
     df = pd.DataFrame(strats)
     df['totalProfit'] = df['totalProfit'] * 100
     df.to_excel(f'ready_data/{token}.xlsx')
+    strat_db.close_db()
     return strats
 
+
+@logger.catch
+def add_latest_year(strats):
+    strat_list = []
+    for strat in strats:
+        strat_db = StratsDataBase(strat['token'])
+        full_strats = strat_db.read_strats()
+        for year in YEARS:
+            if year != strat['year']:
+                for latest_strat in full_strats:
+                    if strat['arch'] == latest_strat['arch'] and strat['arch_type'] == latest_strat['arch_type'] and year == latest_strat['year'] and strat['interval'] == latest_strat['interval'] and strat['comb'] == latest_strat['comb']:
+                        strat['latestYear'] = year
+                        strat['latestYearProfit'] = latest_strat['totalProfit']
+                        strat_list.append(strat)
+    strat_db.close_db()
+    return strat_list
 
 @logger.catch
 def run():
@@ -66,6 +83,7 @@ def run():
             strat['token'] = token
             all_data.append(strat)
     data = profitable_strats(all_data)
+    data = add_latest_year(data)
     df = pd.DataFrame(data)
     df.to_excel('analized.xlsx')
 
