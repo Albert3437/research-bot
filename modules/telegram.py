@@ -40,7 +40,7 @@ class Telegram:
             button4 = KeyboardButton(text="Второй этап!")
             button5 = KeyboardButton(text="Скачать логгер")
             button6 = KeyboardButton(text="Скачать базу данных")
-            keyboard.add(button1, button2, button3, button4, button3, button4)
+            keyboard.add(button1, button2, button3, button4, button5, button6)
 
             # Отправляем сообщение с клавиатурой
             self.bot.send_message(self.chat_id, "Дорова бро, нажав одну кнопочку, через пару суток ты узнаешь о самых эффективных торговых инструментах", reply_markup=keyboard)
