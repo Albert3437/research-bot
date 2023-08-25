@@ -9,3 +9,4 @@ cd ta-lib
 make
 sudo make install
 cd ..
+pip install -r requirements.txt
