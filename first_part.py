@@ -19,8 +19,8 @@ def json_dump(data, filename):
 def calc_all_indicators(df):
     ta = TechnicalIndicators(df)
 
-    for values in INDICATOR_DICT.values():
-        eval(values)
+    for values in INDICATOR_DICT(ta).values():
+        values()
 
     return df
 

@@ -2,6 +2,7 @@ from modules.indicators import TechnicalIndicators
 import pandas as pd
 import matplotlib.pyplot as plt
 from modules.config import INDICATOR_DICT
+from modules.binance import BinanceData
 
 def test(df, indicators):
     # Расчет индикаторов
@@ -23,13 +24,14 @@ def test(df, indicators):
             signals.add(signal1)
 
         close = float(df['close'].iloc[i])
+        timestamp = float(df['timestamp'].iloc[i])
 
         if len(signals) == 1:
             pos_side = signals.pop()
 
         if pos_side == 1:
             if ans[0] == -1:
-                percent = close/price
+                percent = price/close
                 bank *= percent
                 bank_history.append(bank)
                 price_history.append(close)
@@ -41,7 +43,7 @@ def test(df, indicators):
                 a=1
         elif pos_side == -1:
             if ans[0] == 1:
-                percent = price/close
+                percent = close/price
                 bank *= percent
                 bank_history.append(bank)
                 price_history.append(close)
@@ -78,6 +80,6 @@ def test(df, indicators):
     return round(bank, 2)
     
 
-df = pd.read_csv('data/SOLUSDT/data_2023/5m.csv')
-value = test(df, ['CCI', 'RSI'])
+df = pd.read_csv('data/DOTUSDT/data_2023/2h.csv')
+value = test(df, ['CCI', 'AD', 'DM'])
 print("Общий доход:", value)

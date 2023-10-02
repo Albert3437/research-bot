@@ -9,7 +9,7 @@ class BinanceData:
         self.client = Client(api_key, api_secret)
 
     logger.catch
-    def get_historical_candles(self, start_date, end_date, symbol='BTCUSDT', interval=Client.KLINE_INTERVAL_5MINUTE):
+    def get_historical_candles(self, start_date, end_date, symbol='BTC', interval=Client.KLINE_INTERVAL_5MINUTE):
         while True:
             # Цикл нужен для того чтобы при проблемах с ответами сервера(такое было), была повторная попытка получния свечей
             try:

@@ -9,7 +9,7 @@ from modules.db import StratsDataBase
 def amount_filter(strats:list):
     strat_list = []
     for i,strat in enumerate(strats):
-        if strat['dealsNumber'] < 3000:
+        if strat['dealsNumber'] < MAX_DEAL_NUMBER:
             strat_list.append(strats[i])
     return strat_list
 
@@ -27,19 +27,27 @@ def year_filter(strats):
 def non_profit_filter(strats:list):
     strat_list = []
     for i,strat in enumerate(strats):
-        if strat['totalProfit'] > 1:
+        if strat['totalProfit'] > MIN_TOTAL_PERCENT:
             strat_list.append(strats[i])
     return strat_list
 
 
 @logger.catch
+def success_percent_filter(strats:list):
+    strat_list = []
+    for strat in strats:
+        if strat['profitPercent']>=DEALS_PROFIT_PERCENT:
+            strat_list.append(strat)
+    return strat_list
+
+
+@logger.catch
 def profitable_strats(strats):
-    best_strats = []
-    profit_percents = []
+    best_strats, profit_percents = [], []
     for strat in strats:
         profit_percents.append(strat['totalProfit'])
     sorted_list = sorted(profit_percents)
-    for profit_percent in sorted_list[-20:]:
+    for profit_percent in sorted_list[-PROFIT_STRAT_NUMBER:]:
         index = profit_percents.index(profit_percent)
         best_strats.append(strats[index])
     return best_strats
@@ -47,13 +55,16 @@ def profitable_strats(strats):
 
 @logger.catch
 def core(token):
+    # Ядро фильтрационного этапа
+    # В эту функцию можно добавлять различные фильтры,
+    # по аналогии с теми которые уже добавлены
     strat_db = StratsDataBase(token)
     strats = strat_db.read_strats()
     strats = non_profit_filter(strats)
     strats = amount_filter(strats)
     strats = year_filter(strats)
+    strats = success_percent_filter(strats)
     df = pd.DataFrame(strats)
-    df['totalProfit'] = df['totalProfit'] * 100
     df.to_excel(f'ready_data/{token}.xlsx')
     strat_db.close_db()
     return strats
@@ -83,7 +94,7 @@ def run():
             strat['token'] = token
             all_data.append(strat)
     data = profitable_strats(all_data)
-    data = add_latest_year(data)
+    #data = add_latest_year(data)
     df = pd.DataFrame(data)
     df.to_excel('analized.xlsx')
 

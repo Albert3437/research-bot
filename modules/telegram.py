@@ -58,10 +58,10 @@ class Telegram:
             run()
             self.send_message('Обработано')
         if text == 'Скачать базу данных':
-            excel_file = open('data.db', 'rb')  # Замените на путь к вашему Excel файлу
+            excel_file = open('data.db', 'rb')
             self.bot.send_document(self.chat_id, excel_file)
         if text == 'Скачать логгер':
-            excel_file = open('debug.log', 'rb')  # Замените на путь к вашему Excel файлу
+            excel_file = open('debug.log', 'rb')
             self.bot.send_document(self.chat_id, excel_file)
         
 

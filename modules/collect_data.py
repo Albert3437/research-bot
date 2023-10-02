@@ -6,11 +6,11 @@ import time
 def update_data():
 
     bd = BinanceData()
-    dates = [['2023-01-01',time.time()*1000]]
+    dates = [['2023-01-01', time.time()*1000]]
     for symbol in TOKEN_LIST:
         print(symbol)
         for date in dates:
-            print(date) 
+            print(date)
             for interval in INTERVALS:
                 print(interval)
 

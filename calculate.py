@@ -46,7 +46,6 @@ class Calculation:
             self.switcher=1
 
 
-
     def core(self, row):
         pos_side = 0
         signals = set()
