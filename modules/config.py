@@ -1,3 +1,5 @@
+import time
+
 TELE_TOKEN = '5667820959:AAHk3L83owZ7AF5-bdItInNkOxNmlDLAx08' # 6583322943:AAH0NHk0V25t502hdnUGbyODyblw30TFfYk
 TELE_USER_ID = '476600066'
 TOKEN_LIST = ["DOGE", "SOL", "DOT", "AVAX", "ADA", "BTC", "LTC", "ETH", "TRX", 'SHIB']
@@ -8,6 +10,11 @@ ARCH_LIST = ['classic', "classic reverse"]
 ARCH_TYPE = ['classic', 'all signals']
 COMB_NUMBER_LIST = [1,2,3]
 FEES = 0.0005 #Комиссия в процнтах, 100% == 1
+
+# Конфиг для исходных данных
+
+START_DATE = '2022-01-01'
+END_DATE = time.time()
 
 # Конфиг для второй части
 

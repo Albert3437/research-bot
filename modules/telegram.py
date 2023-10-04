@@ -5,7 +5,6 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 from modules.logger import logger
 from modules.core import start
 import asyncio
-from modules.collect_data import update_data
 from second_part import run
 
     
@@ -52,7 +51,7 @@ class Telegram:
             excel_file = open('analized.xlsx', 'rb')  # Замените на путь к вашему Excel файлу
             self.bot.send_document(self.chat_id, excel_file)
         if text == 'Обновить данные для анализа':
-            update_data()
+            # вставить функцию обновления данных
             self.send_message('Данные обновлены!')
         if text == 'Второй этап!':
             run()
